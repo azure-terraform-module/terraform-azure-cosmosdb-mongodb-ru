@@ -73,3 +73,10 @@ EOT
   type        = list(string)
 }
 
+
+variable "total_throughput_limit" {
+  description = "The total throughput limit for the Cosmos DB account."
+  type        = number
+  default     = null
+  nullable    = true
+}

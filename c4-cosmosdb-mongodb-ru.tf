@@ -15,10 +15,17 @@ resource "azurerm_cosmosdb_account" "mongo" {
     mongo_server_version = var.mongo_version
     consistency_policy {
       consistency_level       = var.consistency_level
-   }
+    }
   
     capabilities {
       name = "EnableMongo"
+    }
+
+    dynamic "capacity" {
+      for_each = var.total_throughput_limit != null ? [1] : []
+      content {
+        total_throughput_limit = var.total_throughput_limit
+      }
     }
   
 }
