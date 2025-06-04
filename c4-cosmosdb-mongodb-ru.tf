@@ -1,5 +1,5 @@
 resource "azurerm_cosmosdb_account" "mongo" {
-    name                = "example-mongo-cosmos"
+    name                = var.mongodb_name
     location            = var.location
     resource_group_name = var.resource_group_name
     offer_type          = "Standard"
@@ -27,6 +27,26 @@ resource "azurerm_cosmosdb_account" "mongo" {
         total_throughput_limit = var.total_throughput_limit
       }
     }
+    capabilities {
+      name = "EnableServerless"
+    }
+
+    dynamic "capabilities" {
+    for_each = var.serverless_mode ? [1] : []
+    content {
+      name = "EnableServerless"
+    }
+  }
+
+  public_network_access_enabled = local.public_network_access
+
+  dynamic "virtual_network_rule" {
+    for_each = local.is_service ? toset(var.subnet_ids) : []
+    content {
+      id                                   = virtual_network_rule.value
+      ignore_missing_vnet_service_endpoint = true
+    }
+  }
   
 }
   

@@ -18,32 +18,32 @@ locals {
   # Create private DNS zone if not provided - Private endpoint
   private_dns_zone_ids = local.is_private ? (
     length(var.private_dns_zone_ids) > 0 ? var.private_dns_zone_ids : [
-      azurerm_private_dns_zone.private_dns_eventhub[0].id
+      azurerm_private_dns_zone.private_dns_cosmosdb[0].id
     ]
   ) : []
  
-  # Network rulesets - Service endpoints
-  network_rulesets = [
-    {
-      default_action                 = local.is_public ? "Allow" : "Deny" # If use public endpoint, must allow all traffic
-      trusted_service_access_enabled = true
-      public_network_access_enabled  = local.public_network_access # Service endpoints, Public endpoints
+  # # Network rulesets - Service endpoints
+  # network_rulesets = [
+  #   {
+  #     default_action                 = local.is_public ? "Allow" : "Deny" # If use public endpoint, must allow all traffic
+  #     trusted_service_access_enabled = true
+  #     public_network_access_enabled  = local.public_network_access # Service endpoints, Public endpoints
  
-      # Vnet rules - Service endpoints
-      virtual_network_rule = local.is_service ? [
-        for subnet_id in var.subnet_ids : {
-          subnet_id                                       = subnet_id
-          ignore_missing_virtual_network_service_endpoint = true
-        }
-      ] : []
+  #     # Vnet rules - Service endpoints
+  #     virtual_network_rule = local.is_service ? [
+  #       for subnet_id in var.subnet_ids : {
+  #         subnet_id                                       = subnet_id
+  #         ignore_missing_virtual_network_service_endpoint = true
+  #       }
+  #     ] : []
  
-      # IP rules - Service endpoints
-      ip_rule = local.is_service ? [
-        for ip in var.ip_rules : {
-          ip_mask = ip
-          action  = "Allow"
-      }] : []
-    }
-  ]
+  #     # IP rules - Service endpoints
+  #     ip_rule = local.is_service ? [
+  #       for ip in var.ip_rules : {
+  #         ip_mask = ip
+  #         action  = "Allow"
+  #     }] : []
+  #   }
+  # ]
  
 }
