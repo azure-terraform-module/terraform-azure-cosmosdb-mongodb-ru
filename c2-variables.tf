@@ -21,14 +21,6 @@ variable "subnet_ids" {
   default     = []
 }
 
-variable "network_mode" {
-  type = string
-  validation {
-    condition     = contains(["private", "service", "public"], var.network_mode)
-    error_message = "network_mode must be one of private, service, or public"
-  }
-}
-
 variable "private_dns_zone_ids" {
   description = "The resource ID of the private DNS zone for Event Hub."
   type        = list(string)
