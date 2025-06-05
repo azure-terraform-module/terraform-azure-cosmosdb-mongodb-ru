@@ -114,6 +114,10 @@ List of database configurations. Example:
     throughput   = 400
   }
 ]
+Note:   
+- scaling_mode must be either "auto" or "manual".
+- For "auto", throughput sets the max autoscale RU/s.
+- For "manual", throughput sets the fixed RU/s.
 EOT
   type = list(object({
     name          = string
