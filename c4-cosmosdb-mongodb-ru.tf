@@ -27,9 +27,6 @@ resource "azurerm_cosmosdb_account" "mongo" {
         total_throughput_limit = var.total_throughput_limit
       }
     }
-    capabilities {
-      name = "EnableServerless"
-    }
 
     dynamic "capabilities" {
     for_each = var.serverless_mode ? [1] : []
