@@ -50,3 +50,22 @@ resource "azurerm_cosmosdb_account" "mongo" {
   
 }
   
+
+resource "azurerm_cosmosdb_mongo_database" "this" {
+  for_each            = { for db in var.databases : db.name => db }
+  name                = each.value.name
+  resource_group_name = var.resource_group_name
+  account_name        = azurerm_cosmosdb_account.mongo.name
+
+  # Throughput block for autoscale/manual
+  dynamic "autoscale_settings" {
+    for_each = each.value.scaling_mode == "auto" ? [1] : []
+    content {
+      max_throughput = each.value.throughput
+    }
+  }
+
+  # Throughput for manual
+  throughput = each.value.scaling_mode == "manual" ? each.value.throughput : null
+}
+

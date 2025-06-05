@@ -98,3 +98,33 @@ variable "mongodb_name" {
   description = "Cosmos DB account name for MongoDB"
   type = string
 }
+
+variable "databases" {
+  description = <<EOT
+List of database configurations. Example:
+[
+  {
+    name         = "ahihi"
+    scaling_mode = "auto"
+    throughput   = 400
+  },
+  {
+    name         = "huhu"
+    scaling_mode = "manual"
+    throughput   = 400
+  }
+]
+EOT
+  type = list(object({
+    name          = string
+    scaling_mode  = string
+    throughput    = number
+  }))
+  default = []
+  validation {
+    condition = alltrue([
+      for db in var.databases : contains(["auto", "manual"], db.scaling_mode)
+    ])
+    error_message = "scaling_mode must be either 'auto' or 'manual'."
+  }
+}
