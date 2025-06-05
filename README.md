@@ -17,7 +17,8 @@ A Terraform module to deploy Azure CosmosDB MongoDB databases with support for b
 
 ```plaintext
 module "cosmosdb_mongodb" {
-  source = "github.com/azure-terraform-module/terraform-azure-cosmosdb-mongodb-ru"
+  source  = "azure-terraform-module/cosmosdb-mongodb-ru/azure"
+  version = "0.0.1"
 
   resource_group_name = "your-resource-group"
   account_name        = "your-cosmosdb-account"
@@ -49,7 +50,8 @@ module "cosmosdb_mongodb" {
 
 ```plaintext
 module "cosmos-mongodb" {
-  source  = "github.com/azure-terraform-module/terraform-azure-cosmosdb-mongodb-ru?ref=master"
+  source  = "azure-terraform-module/cosmosdb-mongodb-ru/azure"
+  version = "0.0.1"
   location            = "Australia East"
   resource_group_name = "nimtechnology"
   mongodb_name = "elearning"
@@ -76,7 +78,8 @@ module "vnet" {
   subnet_prefixes = ["10.0.1.0/24","10.0.2.0/24"]
 }
 module "cosmos-mongodb" {
-  source  = "github.com/azure-terraform-module/terraform-azure-cosmosdb-mongodb-ru?ref=master"
+  source  = "azure-terraform-module/cosmosdb-mongodb-ru/azure"
+  version = "0.0.1"
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
   mongodb_name = "elearning"
@@ -103,7 +106,8 @@ module "vnet" {
 }
 
 module "cosmos-mongodb" {
-  source  = "github.com/azure-terraform-module/terraform-azure-cosmosdb-mongodb-ru?ref=master"
+  source  = "azure-terraform-module/cosmosdb-mongodb-ru/azure"
+  version = "0.0.1"
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
   mongodb_name = "elearning"
@@ -133,7 +137,7 @@ Use these for secure, private connections from your VNet.
 
 ## Input Variables
 
-Please refer:
+Please refer: [Terraform Input](https://registry.terraform.io/modules/azure-terraform-module/cosmosdb-mongodb-ru/azure/latest?tab=inputs)
 
 ---
 
