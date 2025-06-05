@@ -36,6 +36,7 @@ resource "azurerm_cosmosdb_account" "mongo" {
   }
 
   public_network_access_enabled = local.public_network_access
+  is_virtual_network_filter_enabled = local.is_service
 
   dynamic "virtual_network_rule" {
     for_each = local.is_service ? toset(var.subnet_ids) : []
